@@ -6,12 +6,17 @@
 
   <form class="todoListsForm">
     <mat-form-field>
-      <input matInput placeholder="new todosList name" [(ngModel)]="newTodosListName" name="newTodosListName"/>
+      <input matInput placeholder="new todosList name" [(ngModel)]="newTodosListName" name="new21312"/>
     </mat-form-field>
     <button mat-raised-button color="primary"
             [disabled]="newTodosListName.length === 0"
             (click)="createTodoList()">Add
     </button>
+    <div>
+      <div *ngFor="let todosList of todosLists">
+        {{todosList.name}}
+      </div>
+    </div>
   </form>
 
 </div>

@@ -15,7 +15,9 @@ export class TodosFacadeMock implements TodosFacade {
   }
 
   createTodoList(name: string): IPromise<TodosList> {
-    return when(new TodosListBuilder().withName(name).build());
+    const todoList: TodosList = new TodosListBuilder().withName(name).build();
+    this.todoLists.push(todoList);
+    return when(todoList);
   }
 
   updateTodoList(id: string, name: string): IPromise<TodosList> {
