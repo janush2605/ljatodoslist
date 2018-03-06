@@ -18,12 +18,20 @@ export class AppComponent implements OnInit {
   todosLists: Array<TodosList> = [];
 
   async ngOnInit(): Promise<void> {
-    this.todosLists = await this.facade.getTodolists();
+    await this.updateTodosLists();
   }
 
   async createTodoList(): Promise<void> {
     await this.facade.createTodoList(this.newTodosListName);
+    await this.updateTodosLists();
+    this.clearTodosListName();
+  }
+
+  private async updateTodosLists() {
     this.todosLists = await this.facade.getTodolists();
+  }
+
+  private clearTodosListName() {
     this.newTodosListName = '';
   }
 
