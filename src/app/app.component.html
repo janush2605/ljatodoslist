@@ -1,0 +1,17 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    LJA todo list
+  </h1>
+
+  <form class="todoListsForm">
+    <mat-form-field>
+      <input matInput placeholder="new todosList name" [(ngModel)]="newTodosListName" name="newTodosListName"/>
+    </mat-form-field>
+    <button mat-raised-button color="primary"
+            [disabled]="newTodosListName.length === 0"
+            (click)="createTodoList()">Add
+    </button>
+  </form>
+
+</div>
