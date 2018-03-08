@@ -21,9 +21,10 @@ export class TodosFacadeMock implements TodosFacade {
   }
 
   updateTodoList(id: string, name: string): IPromise<TodosList> {
-    const todosList: TodosList = _.find(this.todoLists, (todosList): boolean => todosList.id === id);
-    if (todosList) {
-      return when(new TodosListBuilder().withName(name).build());
+    const index: number = _.findIndex(this.todoLists, (todosList): boolean => todosList.id === id);
+    if (index >= 0) {
+      this.todoLists[index].name = name;
+      return when(this.todoLists[index]);
     }
     return reject('TodosList with given id: ' + id + ' not found');
   }
