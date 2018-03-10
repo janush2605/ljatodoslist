@@ -7,10 +7,15 @@ import {MatInputModule} from '@angular/material/input';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material";
 import {FormsModule} from "@angular/forms";
+import {ListComponentComponent} from './list-component/list-component.component';
+import {TodoComponentComponent} from './todo-component/todo-component.component';
+import {TodosFacadeMock} from "../services/TodosFacadeMock";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ListComponentComponent,
+    TodoComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +24,7 @@ import {FormsModule} from "@angular/forms";
     MatButtonModule,
     FormsModule
   ],
-  providers: [],
+  providers: [TodosFacadeMock],
   bootstrap: [AppComponent]
 })
 export class AppModule {

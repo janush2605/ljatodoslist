@@ -1,1 +1,17 @@
+.details-panel {
+  display: inline-block;
+  vertical-align: top;
+  height: 469px;
+  width: 400px;
+  position: relative;
+}
 
+.details-form {
+  padding-top: 29px;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.inline-block {
+  display: inline-block;
+}

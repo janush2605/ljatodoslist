@@ -1,0 +1,16 @@
+<div class="todos-list">
+  <div class="inline-block">
+    <mat-form-field>
+      <input class="vertical-menu-item" matInput name="{{list.id}}"
+             #listInput
+             (keyup.enter)="saveList(listInput.value)"
+             value="{{list.name}}"
+             style="cursor: pointer"/>
+    </mat-form-field>
+  </div>
+  <div class="inline-block">
+    <button mat-raised-button color="primary" (click)="editList()">Edit</button>
+    <button mat-raised-button color="primary" (click)="deleteTodoList()">Delete</button>
+    <button mat-raised-button color="primary" (click)="loadTodos()">Todos</button>
+  </div>
+</div>

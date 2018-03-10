@@ -4,7 +4,9 @@ import {Todo} from "../model/Todo";
 import {IPromise, reject, when} from "q";
 import {TodosListBuilder} from "../model/TodosListBuilder";
 import * as _ from "lodash";
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class TodosFacadeMock implements TodosFacade {
 
   private todoLists: Array<TodosList> = [];

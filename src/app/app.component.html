@@ -6,7 +6,7 @@
 
   <form class="todoListsForm">
     <mat-form-field>
-      <input matInput placeholder="new todosList name" [(ngModel)]="newTodosListName" name="new21312"/>
+      <input matInput placeholder="new todosList name" [(ngModel)]="newTodosListName" name="newTodosListName"/>
     </mat-form-field>
     <button mat-raised-button color="primary"
             [disabled]="newTodosListName.length === 0"
@@ -18,26 +18,35 @@
         <mat-form-field>
           <input [disabled]="todosLists.length === 0" matInput #filterTodosList placeholder="filter todos lists"/>
         </mat-form-field>
-        <div>
+        <div style="height: 400px; overflow-y: auto">
           <div *ngFor="let todosList of todosLists">
-            <mat-form-field>
-              <input class="vertical-menu-item" [readonly]="true" matInput name="{{todosList.id}}" value="{{todosList.name}}"
-                     style="cursor: pointer" (click)="selectTodosList(todosList)"/>
-            </mat-form-field>
+            <app-list-component [list]="todosList"></app-list-component>
           </div>
         </div>
       </div>
-      <div style="display: inline-block; vertical-align: top">
-        <div style="padding-left: 30px">
-          <button mat-raised-button color="primary" (click)="editList()">Edit</button>
-          <button mat-raised-button color="primary" (click)="saveListWithTodos()"[disabled]="!editSelectTodosList">Save</button>
-          <button mat-raised-button color="primary" (click)="cancelListEdition()" [disabled]="!editSelectTodosList">Cancel</button>
-          <button mat-raised-button color="primary" (click)="deleteTodoList()">Delete</button>
-        </div>
-        <div *ngIf="selectedTodosList" style="padding-top: 22px">
-          <mat-form-field>
-            <input [readonly]="!editSelectTodosList" matInput placeholder="Name" name="selectedTodosList" value="{{selectedTodosList.name}}"/>
-          </mat-form-field>
+      <div class="details-panel">
+        <div class="details-form" *ngIf="selectedTodosList">
+          <div>
+            <mat-form-field>
+              <input [readonly]="!editMode" matInput placeholder="Name" name="selectedTodosList"
+                     [(ngModel)]="selectedTodosList.name"/>
+            </mat-form-field>
+          </div>
+          <div class="inline-block">
+            <h2>Todos</h2>
+          </div>
+          <div class="inline-block">
+            <button mat-raised-button color="primary" (click)="addTodo()">Add</button>
+          </div>
+          <div style="height: 400px; overflow-y: auto">
+            <div *ngFor="let todo of todosOfSelectedList">
+              <mat-form-field>
+                <input class="vertical-menu-item" [readonly]="true" matInput name="{{todo.id}}"
+                       value="{{todo.name}}"
+                       style="cursor: pointer"/>
+              </mat-form-field>
+            </div>
+          </div>
         </div>
       </div>
     </div>

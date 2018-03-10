@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {TodosFacade} from "../services/TodosFacade";
 import {TodosFacadeMock} from "../services/TodosFacadeMock";
 import {TodosList} from "../model/TodosList";
 import {IPromise} from "q";
+import {Todo} from "../model/Todo";
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-root',
@@ -11,21 +13,24 @@ import {IPromise} from "q";
 })
 export class AppComponent implements OnInit {
 
-  private readonly facade: TodosFacade = new TodosFacadeMock();
-
   newTodosListName: string = '';
 
   todosLists: Array<TodosList> = [];
   selectedTodosList: TodosList;
+  todosOfSelectedList: Array<Todo>;
 
-  editSelectTodosList: boolean = false;
+  editMode: boolean = false;
+
+
+  constructor(private facade: TodosFacadeMock) {
+  }
 
   async ngOnInit(): Promise<void> {
     await this.updateTodosLists();
   }
 
   selectTodosList(todosList: TodosList): void {
-    this.selectedTodosList = todosList;
+    this.selectedTodosList = _.clone(todosList);
   }
 
   async createTodoList(): Promise<void> {
@@ -35,27 +40,33 @@ export class AppComponent implements OnInit {
   }
 
   editList(): void {
-    this.editSelectTodosList = true;
+    this.editMode = true;
   }
 
-  saveListWithTodos(): void {
-    this.editSelectTodosList = false;
+  async saveListWithTodos(): Promise<void> {
+    if (this.selectedTodosList) {
+      await this.saveTodosList();
+    }
+    this.editMode = false;
   }
 
   cancelListEdition(): void {
-    this.editSelectTodosList = false;
+    this.editMode = false;
   }
 
-  async deleteTodoList(): Promise<void> {
-    if (this.selectedTodosList) {
-      await this.facade.deleteTodoList(this.selectedTodosList.id);
-      await this.updateTodosLists();
-    }
-  }
-
-  async saveTodosList(id: string, name: string): Promise<void> {
-    await this.facade.updateTodoList(id, name);
+  async deleteTodoList(id: string): Promise<void> {
+    await this.facade.deleteTodoList(id);
     await this.updateTodosLists();
+    this.selectedTodosList = null;
+  }
+
+  async saveTodosList(): Promise<void> {
+    await this.facade.updateTodoList(this.selectedTodosList.id, this.selectedTodosList.name);
+    await this.updateTodosLists();
+  }
+
+  addTodo(): void {
+
   }
 
   private async updateTodosLists() {
